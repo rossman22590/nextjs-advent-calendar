@@ -213,8 +213,15 @@ export default function PrizeWheel({
 
           {/* Center piece */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-36 sm:h-36 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-xl flex items-center justify-center border-4 border-yellow-200">
-            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-6xl sm:text-7xl">🎯</span>
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full shadow-inner">
+              <div 
+                className="absolute text-6xl sm:text-7xl"
+                style={{
+                  left: '55%',
+                  top: '43%',
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >🎯</div>
             </div>
           </div>
         </div>
