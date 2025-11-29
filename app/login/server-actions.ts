@@ -15,6 +15,17 @@ export async function authAction(mode: Mode, formData: FormData) {
   }
 
   if (mode === "register") {
+    const inviteCode = (formData.get("inviteCode") as string | null)?.trim() ?? "";
+    
+    if (!inviteCode) {
+      throw new Error("Invite code is required");
+    }
+
+    // Validate invite code
+    if (inviteCode !== process.env.INVITE_TOKEN) {
+      throw new Error("Invalid invite code");
+    }
+
     // Get IP address from headers
     const headersList = await headers();
     const ipAddress = 

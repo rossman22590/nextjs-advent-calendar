@@ -35,6 +35,21 @@ export default function RegisterPage() {
             action={handleSubmit}
           >
             <Input 
+              name="inviteCode" 
+              type="text" 
+              label="Invite Code" 
+              required 
+              size="lg"
+              variant="bordered"
+              classNames={{
+                input: "text-white placeholder:text-gray-400",
+                label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+              }}
+              style={{ color: 'white' } as any}
+              labelPlacement="inside"
+            />
+            <Input 
               name="email" 
               type="email" 
               label="Email" 
