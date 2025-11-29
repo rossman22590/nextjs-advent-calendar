@@ -37,7 +37,7 @@ export default function LoginForm() {
                 />
               </div>
               <p className="text-lg text-white text-center">Please enter the code to open your advent calendar.</p>
-              <p className="text-sm text-gray-400 text-center italic">Hint: Acronym of "Tech In Schools Initiative" in all caps</p>
+              <p className="text-sm text-gray-400 text-center italic">Hint: Acronym of &quot;Tech In Schools Initiative&quot; in all caps</p>
               <div className="flex w-full gap-4">
                 <Input
                   size="lg"
