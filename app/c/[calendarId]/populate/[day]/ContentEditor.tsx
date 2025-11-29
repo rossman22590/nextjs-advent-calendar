@@ -78,7 +78,7 @@ export default function ContentEditor({
         <Input
           label="YouTube URL"
           value={(content as YouTubeContent).url}
-          onChange={(e) => onChange({ ...content, url: e.target.value })}
+          onChange={(e) => onChange({ ...content, url: e.target.value } as YouTubeContent)}
         />
       )}
 
@@ -86,7 +86,7 @@ export default function ContentEditor({
         <Textarea
           label="Text Content"
           value={(content as TextContent).text || ""}
-          onValueChange={(value) => onChange({ ...content, text: value })}
+          onValueChange={(value) => onChange({ ...content, text: value } as TextContent)}
         />
       )}
 
@@ -94,7 +94,7 @@ export default function ContentEditor({
         <Input
           label="Image URL"
           value={(content as ImageContent).url}
-          onChange={(e) => onChange({ ...content, url: e.target.value })}
+          onChange={(e) => onChange({ ...content, url: e.target.value } as ImageContent)}
         />
       )}
 
@@ -102,7 +102,7 @@ export default function ContentEditor({
         <Input
           label="Video URL"
           value={(content as VideoFileContent).url}
-          onChange={(e) => onChange({ ...content, url: e.target.value })}
+          onChange={(e) => onChange({ ...content, url: e.target.value } as VideoFileContent)}
         />
       )}
 
@@ -110,7 +110,7 @@ export default function ContentEditor({
         <Input
           label="Spotify URL"
           value={(content as SpotifyContent).url}
-          onChange={(e) => onChange({ ...content, url: e.target.value })}
+          onChange={(e) => onChange({ ...content, url: e.target.value } as SpotifyContent)}
         />
       )}
 
@@ -123,7 +123,7 @@ export default function ContentEditor({
                 onChange={(e) => {
                   const newImages = [...(content as GalleryContent).images];
                   newImages[index] = e.target.value;
-                  onChange({ ...content, images: newImages });
+                  onChange({ ...content, images: newImages } as GalleryContent);
                 }}
               />
               <Button
@@ -131,7 +131,7 @@ export default function ContentEditor({
                 onClick={() => {
                   const newImages = [...(content as GalleryContent).images];
                   newImages.splice(index, 1);
-                  onChange({ ...content, images: newImages });
+                  onChange({ ...content, images: newImages } as GalleryContent);
                 }}
               >
                 Remove
@@ -143,7 +143,7 @@ export default function ContentEditor({
               onChange({
                 ...content,
                 images: [...(content as GalleryContent).images, ""],
-              })
+              } as GalleryContent)
             }
           >
             Add Image
@@ -156,12 +156,12 @@ export default function ContentEditor({
           <Input
             label="URL"
             value={(content as LinkContent).url}
-            onChange={(e) => onChange({ ...content, url: e.target.value })}
+            onChange={(e) => onChange({ ...content, url: e.target.value } as LinkContent)}
           />
           <Input
             label="Label"
             value={(content as LinkContent).label}
-            onChange={(e) => onChange({ ...content, label: e.target.value })}
+            onChange={(e) => onChange({ ...content, label: e.target.value } as LinkContent)}
           />
         </div>
       )}
@@ -169,7 +169,7 @@ export default function ContentEditor({
       {type === "quiz" && (
         <QuizEditor
           quiz={content as QuizContent}
-          onChange={(quiz) => onChange({ ...content, ...quiz })}
+          onChange={(quiz) => onChange({ ...content, ...quiz } as QuizContent)}
         />
       )}
     </div>

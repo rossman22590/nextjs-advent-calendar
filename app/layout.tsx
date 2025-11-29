@@ -1,6 +1,14 @@
 import { fontSans } from "@/config/fonts";
 import "@/styles/globals.css";
-import AuthBar from "@/components/AuthBar";
+import dynamic from "next/dynamic";
+
+const AuthBar = dynamic(
+  () => import("@/components/AuthBar") as any,
+  {
+    ssr: true,
+    loading: () => <div className="h-8" />,
+  }
+) as any;
 import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@nextui-org/link";

@@ -27,7 +27,7 @@ export default function PrizeWheel({
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [result, setResult] = useState<Prize | null>(
-    hasSpun ? prizes.find((p) => p.id === wonPrizeId) || null : null
+    hasSpun ? prizes.find((p) => p.id === wonPrizeId) || null : null,
   );
   const [showResult, setShowResult] = useState(hasSpun);
   const router = useRouter();
@@ -146,7 +146,8 @@ export default function PrizeWheel({
               .join(", ")})`,
             border: "8px solid",
             borderColor: "#fbbf24",
-            boxShadow: "0 0 60px rgba(236, 72, 153, 0.4), inset 0 0 30px rgba(0,0,0,0.2)",
+            boxShadow:
+              "0 0 60px rgba(236, 72, 153, 0.4), inset 0 0 30px rgba(0,0,0,0.2)",
           }}
         >
           {/* Segment dividers - at the START of each segment */}
@@ -183,7 +184,11 @@ export default function PrizeWheel({
                     isSpecial ? "scale-110" : ""
                   }`}
                 >
-                  <span className={`text-xl sm:text-2xl ${isSpecial ? "animate-bounce" : ""}`}>
+                  <span
+                    className={`text-xl sm:text-2xl ${
+                      isSpecial ? "animate-bounce" : ""
+                    }`}
+                  >
                     {getEmoji(prize.name)}
                   </span>
                   <span
@@ -236,9 +241,7 @@ export default function PrizeWheel({
                 <span className="animate-spin">🎰</span> Spinning...
               </>
             ) : (
-              <>
-                🎯 SPIN TO WIN!
-              </>
+              <>🎯 SPIN TO WIN!</>
             )}
           </span>
           {!isSpinning && (
@@ -259,7 +262,9 @@ export default function PrizeWheel({
             <p className="text-xl text-gray-600 mb-2">You won:</p>
             <div className="flex items-center justify-center gap-3 mb-4">
               <span className="text-4xl">{getEmoji(result.name)}</span>
-              <span className="text-2xl font-bold text-pink-600">{result.name}</span>
+              <span className="text-2xl font-bold text-pink-600">
+                {result.name}
+              </span>
             </div>
             {result.description && (
               <p className="text-gray-600 text-base border-t border-pink-200 pt-4 mt-4">
@@ -272,10 +277,14 @@ export default function PrizeWheel({
 
       {hasSpun && !showResult && result && (
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-pink-200 text-center max-w-md">
-          <p className="text-lg text-gray-500 mb-2">You already spun and won:</p>
+          <p className="text-lg text-gray-500 mb-2">
+            You already spun and won:
+          </p>
           <div className="flex items-center justify-center gap-2 mb-3">
             <span className="text-2xl">{getEmoji(result.name)}</span>
-            <span className="text-xl font-bold text-pink-500">{result.name}</span>
+            <span className="text-xl font-bold text-pink-500">
+              {result.name}
+            </span>
           </div>
           {result.description && (
             <p className="text-gray-500 text-sm border-t border-pink-100 pt-3">
@@ -287,8 +296,12 @@ export default function PrizeWheel({
 
       <style jsx>{`
         @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
         }
       `}</style>
     </div>

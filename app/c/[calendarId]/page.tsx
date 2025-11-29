@@ -46,10 +46,10 @@ export default async function Page({ params }: PageProps) {
       "select day from opened_windows where calendar_id = $1 and user_id = $2",
       [calendarId, session.userId],
     );
-    openedDays = openedResult.rows.map((r) => r.day);
+    openedDays = openedResult.rows.map((r: { day: number }) => r.day);
   }
 
-  const windows: WindowContentData[] = windowsResult.rows.map((w) => ({
+  const windows: WindowContentData[] = windowsResult.rows.map((w: WindowContentData) => ({
     ...w,
     opened: openedDays.includes(w.day),
   }));

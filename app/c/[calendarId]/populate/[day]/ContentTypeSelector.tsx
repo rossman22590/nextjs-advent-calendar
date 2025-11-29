@@ -26,7 +26,7 @@ export default function ContentTypeSelector({
     <Select
       label="Content Type"
       selectedKeys={[value]}
-      onSelectionChange={([v]) => onChange(v as ContentType)}
+      onSelectionChange={(selection) => onChange(Array.from(selection)[0] as ContentType)}
     >
       {contentTypes.map((type) => (
         <SelectItem key={type.key} value={type.key}>

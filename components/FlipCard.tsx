@@ -45,10 +45,7 @@ export default function FlipCard({
 
   if (opened) {
     return (
-      <div
-        id={`day-${day}`}
-        className="aspect-square"
-      >
+      <div id={`day-${day}`} className="aspect-square">
         <div className="w-full h-full rounded-2xl shadow-lg bg-gray-200 flex flex-col items-center justify-center p-6">
           <span className="text-2xl font-bold text-gray-400">Day {day}</span>
           <span className="text-sm text-gray-400 mt-2">Already opened</span>
@@ -75,7 +72,9 @@ export default function FlipCard({
             ${emphasized ? "ring-4 ring-pink-500" : ""}
           `}
         >
-          <span className="text-2xl sm:text-3xl font-bold text-pink-500 mb-4">Day {day}</span>
+          <span className="text-2xl sm:text-3xl font-bold text-pink-500 mb-4">
+            Day {day}
+          </span>
           <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
             <FontAwesomeIcon
               icon={getIconForDay(day)}
@@ -83,7 +82,9 @@ export default function FlipCard({
             />
           </div>
           {disabled && (
-            <span className="text-xs sm:text-sm text-gray-400 mt-4">Not yet</span>
+            <span className="text-xs sm:text-sm text-gray-400 mt-4">
+              Not yet
+            </span>
           )}
         </div>
 
@@ -93,7 +94,9 @@ export default function FlipCard({
             ${emphasized ? "ring-4 ring-pink-300" : ""}
           `}
         >
-          <span className="text-xl sm:text-2xl font-bold mb-2 text-center">{title || `Day ${day}`}</span>
+          <span className="text-xl sm:text-2xl font-bold mb-2 text-center">
+            {title || `Day ${day}`}
+          </span>
           <p className="text-xs sm:text-sm text-center line-clamp-2 mb-4 opacity-90">
             {text || "Click to reveal!"}
           </p>

@@ -12,9 +12,7 @@ interface Params {
   }>;
 }
 
-export default async function Page({
-  params,
-}: Params): Promise<JSX.Element> {
+export default async function Page({ params }: Params): Promise<JSX.Element> {
   const { calendarId, day } = await params;
   const dayNumber = Number(day);
   if (!Number.isInteger(dayNumber)) {

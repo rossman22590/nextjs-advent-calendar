@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const prizes = prizesResult.rows;
 
     // Weighted random selection
-    const totalWeight = prizes.reduce((sum, p) => sum + p.weight, 0);
+    const totalWeight = prizes.reduce((sum: number, p: { id: number; name: string; weight: number }) => sum + p.weight, 0);
     let random = Math.random() * totalWeight;
     let selectedPrize = prizes[0];
 

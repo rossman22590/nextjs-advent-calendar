@@ -79,4 +79,15 @@ type ContentData =
   | LinkContent
   | QuizContent;
 
-export type { ContentType, ContentData };
+export type { 
+  ContentType, 
+  ContentData, 
+  YouTubeContent, 
+  TextContent, 
+  ImageContent, 
+  VideoFileContent, 
+  SpotifyContent, 
+  GalleryContent, 
+  LinkContent,
+  QuizContent 
+};

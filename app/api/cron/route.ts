@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   const calendarIdToTokens: Record<string, string[]> = {};
   const calendarIdToName: Record<string, string> = {};
 
-  results.rows.forEach((row) => {
+  results.rows.forEach((row: { calendar_id: string; title: string; token: string }) => {
     if (testMode && !row.calendar_id.includes("test")) return;
 
     calendarIdToTokens[row.calendar_id] = [

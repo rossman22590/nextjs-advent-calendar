@@ -15,14 +15,12 @@ export default async function LoginPage() {
       <Card>
         <CardHeader className="text-xl font-semibold">Login</CardHeader>
         <CardBody>
-          <form className="flex flex-col gap-4" action={authAction.bind(null, "login")}>
+          <form
+            className="flex flex-col gap-4"
+            action={authAction.bind(null, "login")}
+          >
             <Input name="email" type="email" label="Email" required />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              required
-            />
+            <Input name="password" type="password" label="Password" required />
             <Button type="submit" color="primary">
               Sign in
             </Button>

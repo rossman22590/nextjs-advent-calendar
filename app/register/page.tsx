@@ -20,12 +20,7 @@ export default async function RegisterPage() {
             action={authAction.bind(null, "register")}
           >
             <Input name="email" type="email" label="Email" required />
-            <Input
-              name="password"
-              type="password"
-              label="Password"
-              required
-            />
+            <Input name="password" type="password" label="Password" required />
             <Button type="submit" color="primary">
               Create account
             </Button>

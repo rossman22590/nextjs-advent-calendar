@@ -9,6 +9,7 @@ import React from "react";
 import Link from "next/link";
 import WindowEditor from "./WindowEditor";
 import { query } from "@/lib/db";
+import { ContentData } from "./types";
 
 export default async function InitalPopulate({
   params,
@@ -94,7 +95,7 @@ export default async function InitalPopulate({
             action={create}
             className="flex flex-col gap-8 items-stretch justify-center w-full"
           >
-            <WindowEditor defaultValue={calendarWindow} name="data" />
+            <WindowEditor defaultValue={{ ...calendarWindow, name: "data", content: calendarWindow.content as ContentData[] }} name="data" />
             <Button type="submit">Save</Button>
           </form>
           <ErrorBoundary fallback={<div>Invalid data</div>}>

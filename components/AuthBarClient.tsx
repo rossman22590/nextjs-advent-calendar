@@ -1,10 +1,14 @@
-import { getSession } from "@/lib/auth";
+"use client";
+
 import Link from "next/link";
-import { logout } from "@/app/auth/actions";
+import { destroySession } from "@/lib/auth";
 
-export default async function AuthBar() {
-  const session = await getSession();
+async function logout() {
+  "use server";
+  await destroySession();
+}
 
+export default function AuthBarClient({ session }: { session: any }) {
   return (
     <div className="flex items-center justify-end gap-3 py-2">
       {session ? (
