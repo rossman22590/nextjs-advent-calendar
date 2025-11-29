@@ -4,6 +4,7 @@ import {
   faBabyCarriage,
   faBell,
   faCandyCane,
+  faFire,
   faCookieBite,
   faGift,
   faGifts,
@@ -24,23 +25,23 @@ import {
 
 // list of all font awesome icons relating to christmas, winter, love, etc.
 const christmasIcons = [
-  faSnowflake,
-  faMitten,
-  faStar,
-  faCookieBite,
-  faHollyBerry,
-  faCandyCane,
-  faBell,
-  faGift,
-  faIgloo,
-  faSleigh,
-  faTree,
-  faMugHot,
-  faStarHalfAlt,
-  faGifts,
-  faBaby,
-  faSnowman,
-  faBabyCarriage,
+  faSnowflake,    // Day 1
+  faMitten,       // Day 2
+  faStar,         // Day 3
+  faCookieBite,   // Day 4
+  faHollyBerry,   // Day 5
+  faCandyCane,    // Day 6
+  faBell,         // Day 7
+  faGift,         // Day 8
+  faIgloo,        // Day 9
+  faSleigh,       // Day 10
+  faTree,         // Day 11
+  faMugHot,       // Day 12
+  faStarHalfAlt,  // Day 13
+  faGifts,        // Day 14
+  faCandyCane,    // Day 15
+  faSnowman,      // Day 16
+  faFire,         // Day 17 - Candle flame
 ];
 
 export function getIconForDay(day: number): IconDefinition {
