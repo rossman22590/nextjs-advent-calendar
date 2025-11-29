@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS prizes (
+  id SERIAL PRIMARY KEY,
+  calendar_id TEXT NOT NULL REFERENCES calendars(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  color TEXT NOT NULL DEFAULT '#ec4899',
+  weight INT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS prize_spins (
+  calendar_id TEXT NOT NULL,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  prize_id INT REFERENCES prizes(id) ON DELETE SET NULL,
+  spun_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (calendar_id, user_id)
+);

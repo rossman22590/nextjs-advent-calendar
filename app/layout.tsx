@@ -1,5 +1,6 @@
 import { fontSans } from "@/config/fonts";
 import "@/styles/globals.css";
+import AuthBar from "@/components/AuthBar";
 import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@nextui-org/link";
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <div className="relative flex flex-col h-screen">
           <main className="container w-full max-w-4xl mx-auto pt-16 px-6 flex-grow">
+            <AuthBar />
             <Suspense
               fallback={
                 <div className="flex items-center justify-center h-screen gap-2">
