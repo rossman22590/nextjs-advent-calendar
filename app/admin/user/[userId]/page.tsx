@@ -190,7 +190,7 @@ export default async function AdminUserPage({ params }: Params) {
           ))}
 
           {/* Opened Days */}
-          {claimedDays.map((day) => {
+          {claimedDays.map((day: ClaimedDay) => {
             const imageUrl = getImageFromContent(day.content);
             return (
             <Card 
