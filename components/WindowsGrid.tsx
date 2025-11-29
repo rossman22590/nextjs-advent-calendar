@@ -40,7 +40,7 @@ export default function WindowsGrid({ windows }: WindowsGridProps) {
   }, [params]);
 
   return (
-    <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid gap-6 sm:gap-7 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
       {windows.map((window: any) => (
         <FlipCard
           key={window.day}

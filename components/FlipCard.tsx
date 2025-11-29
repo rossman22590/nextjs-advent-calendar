@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getIconForDay } from "@/app/icons";
+import { getIconForDay, getIconColor } from "@/app/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -68,17 +68,20 @@ export default function FlipCard({
         {/* Front of card */}
         <div
           className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-lg flex flex-col items-center justify-center p-6
-            ${disabled ? "opacity-50 bg-gray-100" : "bg-white hover:shadow-xl"}
-            ${emphasized ? "ring-4 ring-pink-500" : ""}
+            ${disabled 
+              ? "opacity-50 bg-gradient-to-br from-gray-100 to-gray-200" 
+              : "bg-gradient-to-br from-white via-pink-50 to-purple-50 hover:shadow-xl hover:from-pink-50 hover:to-purple-100"
+            }
+            ${emphasized ? "ring-4 ring-pink-500 ring-opacity-50" : ""}
           `}
         >
-          <span className="text-2xl sm:text-3xl font-bold text-pink-500 mb-4">
+          <span className={`text-2xl sm:text-3xl font-bold mb-4 ${getIconColor(day)}`}>
             Day {day}
           </span>
           <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
             <FontAwesomeIcon
               icon={getIconForDay(day)}
-              className="text-pink-500 w-full h-full"
+              className={`w-full h-full ${getIconColor(day)}`}
             />
           </div>
           {disabled && (
@@ -90,9 +93,9 @@ export default function FlipCard({
 
         {/* Back of card */}
         <div
-          className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl shadow-lg bg-gradient-to-br from-pink-500 to-pink-600 flex flex-col items-center justify-center p-6 text-white
-            ${emphasized ? "ring-4 ring-pink-300" : ""}
-          `}
+          className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl shadow-lg bg-gradient-to-br from-pink-500 via-purple-500 to-yellow-500 flex flex-col items-center justify-center p-6 text-white
+            ${emphasized ? "ring-4 ring-pink-300 ring-opacity-50" : ""}
+         `}
         >
           <span className="text-xl sm:text-2xl font-bold mb-2 text-center">
             {title || `Day ${day}`}
