@@ -74,12 +74,12 @@ export default function RootLayout({
             <footer className="w-full flex items-center justify-center py-3">
               <Link
                 isExternal
-                className="flex items-center gap-1 text-current"
+                className="flex items-center gap-1 text-white"
                 href="https://getmytsi.org"
                 title="TSI"
               >
-                <span className="text-default-600">Powered by</span>
-                <p className="text-primary">TSI</p>
+                <span className="text-white">Powered by</span>
+                <p className="text-white font-semibold">TSI</p>
               </Link>
             </footer>
           </div>

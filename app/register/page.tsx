@@ -28,27 +28,53 @@ export default function RegisterPage() {
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
       <div className="max-w-lg w-full">
-        <Card>
-          <CardHeader className="text-2xl font-semibold">Register</CardHeader>
-          <CardBody>
+        <div className="flex flex-col gap-5 bg-[#0a0015] backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] p-10 border border-purple-500/30">
+          <div className="text-2xl font-semibold text-white">Register</div>
           <form
             className="flex flex-col gap-4"
             action={handleSubmit}
           >
-            <Input name="email" type="email" label="Email" required size="lg" />
-            <Input name="password" type="password" label="Password" required size="lg" />
+            <Input 
+              name="email" 
+              type="email" 
+              label="Email" 
+              required 
+              size="lg"
+              variant="bordered"
+              classNames={{
+                input: "text-white placeholder:text-gray-400",
+                label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+              }}
+              style={{ color: 'white' } as any}
+              labelPlacement="inside"
+            />
+            <Input 
+              name="password" 
+              type="password" 
+              label="Password" 
+              required 
+              size="lg"
+              variant="bordered"
+              classNames={{
+                input: "text-white placeholder:text-gray-400",
+                label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+              }}
+              style={{ color: 'white' } as any}
+              labelPlacement="inside"
+            />
             <Button type="submit" color="primary" size="lg">
               Create account
             </Button>
           </form>
-          <p className="text-base mt-4">
+          <p className="text-base mt-4 text-gray-300">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary">
+            <Link href="/login" className="text-pink-400 hover:text-pink-300">
               Login
             </Link>
           </p>
-          </CardBody>
-        </Card>
+        </div>
       </div>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>

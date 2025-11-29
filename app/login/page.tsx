@@ -1,12 +1,17 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { authAction } from "./server-actions";
 import { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@nextui-org/modal";
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -28,27 +33,58 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
       <div className="max-w-lg w-full">
-        <Card>
-          <CardHeader className="text-2xl font-semibold">Login</CardHeader>
-          <CardBody>
-            <form
-              className="flex flex-col gap-4"
-              action={handleSubmit}
+        <div className="flex flex-col gap-5 bg-[#0a0015] backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] p-10 border border-purple-500/30">
+          <div className="text-3xl font-semibold text-white">Welcome back</div>
+          <div className="text-sm text-gray-300 mb-2">Sign in to your calendar</div>
+          <form
+            className="flex flex-col gap-4 p-0"
+            action={handleSubmit}
+          >
+            <Input
+              name="email"
+              type="email"
+              label="Email"
+              required
+              size="lg"
+              variant="bordered"
+              classNames={{
+                input: "text-white placeholder:text-gray-400",
+                label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+              }}
+              style={{ color: 'white' } as any}
+              labelPlacement="inside"
+            />
+            <Input
+              name="password"
+              type="password"
+              label="Password"
+              required
+              size="lg"
+              variant="bordered"
+              classNames={{
+                input: "text-white placeholder:text-gray-400",
+                label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+              }}
+              style={{ color: 'white' } as any}
+              labelPlacement="inside"
+            />
+            <Button
+              type="submit"
+              color="primary"
+              size="lg"
             >
-              <Input name="email" type="email" label="Email" required size="lg" />
-              <Input name="password" type="password" label="Password" required size="lg" />
-              <Button type="submit" color="primary" size="lg">
-                Sign in
-              </Button>
-            </form>
-            <p className="text-base mt-4">
+              Sign in
+            </Button>
+            <p className="text-base mt-2 text-gray-300">
               Need an account?{" "}
-              <Link href="/register" className="text-primary">
+              <Link href="/register" className="text-pink-400 hover:text-pink-300">
                 Register
               </Link>
             </p>
-          </CardBody>
-        </Card>
+          </form>
+        </div>
       </div>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
