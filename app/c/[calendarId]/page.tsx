@@ -1,20 +1,24 @@
-import { getFirestoreDB } from "@/app/api/firebase-admin";
 import NotificationManager from "@/components/NotificationManager";
 import WindowsGrid from "@/components/WindowsGrid";
+import { query } from "@/lib/db";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     calendarId: string;
-  };
+  }>;
 }
 
-export default async function Page({ params: { calendarId } }: PageProps) {
-  const configDoc = await getFirestoreDB()
-    .collection(calendarId)
-    .doc("config")
-    .get();
+export default async function Page({ params }: PageProps) {
+  const { calendarId } = await params;
+  const configResult = await query<{
+    title: string;
+    notifications_enabled: boolean | null;
+  }>(
+    "select title, notifications_enabled from calendars where id = $1",
+    [calendarId],
+  );
 
-  if (!configDoc.exists) {
+  if (!configResult.rowCount) {
     return (
       <div className="flex items-center justify-center text-primary text-2xl flex-col gap-4">
         <div>Calendar not found</div>
@@ -23,25 +27,17 @@ export default async function Page({ params: { calendarId } }: PageProps) {
     );
   }
 
-  const config = configDoc.data() as {
-    title: string;
-    notificationsEnabled: boolean | undefined;
+  const config = {
+    title: configResult.rows[0].title,
+    notificationsEnabled: configResult.rows[0].notifications_enabled ?? false,
   };
 
-  const windowsDocs = await getFirestoreDB()
-    .collection(calendarId)
-    .doc("config")
-    .collection("windows")
-    .listDocuments();
+  const windowsResult = await query<WindowContentData>(
+    "select day, title, text, content from windows where calendar_id = $1 order by day asc",
+    [calendarId],
+  );
 
-  const windows: WindowContentData[] = [];
-
-  for (const doc of windowsDocs) {
-    const data = (await doc.get()).data();
-    windows.push({ ...data, day: parseInt(doc.id) } as WindowContentData);
-  }
-
-  windows.sort((a, b) => a.day - b.day);
+  const windows: WindowContentData[] = windowsResult.rows;
 
   return (
     <div className="flex flex-col gap-8 items-stretch justify-center">

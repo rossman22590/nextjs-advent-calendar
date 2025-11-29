@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Quiz from "./Quiz";
 import ContentElementResolver from "./ContentElementResolver";
 import { useParams } from "next/navigation";
+import { isOpen } from "@/app/utils/calendarUtils";
 
 export default function WindowContent({
   content,
@@ -30,6 +31,18 @@ export default function WindowContent({
     const completed = getStoredState(calendarId)[day] ?? false;
     if (completed) {
       setIsCompleted(true);
+    }
+
+    // mark this window as visited so it cannot be reopened
+    if (isOpen(parseInt(day, 10))) {
+      const visitedKey = `${calendarId}:visited`;
+      const visited =
+        (JSON.parse(localStorage.getItem(visitedKey) ?? "{}") as Record<
+          string,
+          boolean
+        >) || {};
+      visited[day] = true;
+      localStorage.setItem(visitedKey, JSON.stringify(visited));
     }
   }, [calendarId, day]);
 

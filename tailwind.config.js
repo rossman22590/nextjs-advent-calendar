@@ -1,18 +1,33 @@
 import {nextui} from '@nextui-org/theme'
 
-const colors = {'guardsman-red': {
-  '50': '#FCF6F0', 
-  '100': '#FAEEE3', 
-  '200': '#F0CEB9', 
-  '300': '#E6AA91', 
-  '400': '#D4614C', 
-  '500': '#C21010', 
-  '600': '#AD0C0C', 
-  '700': '#910909', 
-  '800': '#750606', 
-  '900': '#570303', 
-  '950': '#380101'
-}}
+const colors = {
+  orchid: {
+    '50': '#fdf4ff',
+    '100': '#fae8ff',
+    '200': '#f5d0fe',
+    '300': '#f0abfc',
+    '400': '#e879f9',
+    '500': '#d946ef',
+    '600': '#c026d3',
+    '700': '#a21caf',
+    '800': '#86198f',
+    '900': '#701a75',
+    '950': '#4a044e'
+  },
+  blush: {
+    '50': '#fdf2f8',
+    '100': '#fce7f3',
+    '200': '#fbcfe8',
+    '300': '#f9a8d4',
+    '400': '#f472b6',
+    '500': '#ec4899',
+    '600': '#db2777',
+    '700': '#be185d',
+    '800': '#9d174d',
+    '900': '#831843',
+    '950': '#500724'
+  }
+}
 
 
 /** @type {import('tailwindcss').Config} */
@@ -31,14 +46,14 @@ module.exports = {
     themes: {
       light: {
         colors: {
-          default: colors['guardsman-red'][300],
-          background: colors['guardsman-red'][50],
-          primary: colors['guardsman-red'][500],
-          secondary: colors['guardsman-red'][400],
-          text: colors['guardsman-red'][900],
-          textInvert: colors['guardsman-red'][50],
-          border: colors['guardsman-red'][300],
-          divider: colors['guardsman-red'][300]     
+          default: colors.blush[200],
+          background: colors.orchid[50],
+          primary: colors.orchid[600],
+          secondary: colors.blush[400],
+          text: colors.orchid[900],
+          textInvert: colors.orchid[50],
+          border: colors.orchid[200],
+          divider: colors.orchid[200]     
             
         }
       }

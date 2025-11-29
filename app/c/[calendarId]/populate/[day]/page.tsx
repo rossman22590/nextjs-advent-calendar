@@ -1,7 +1,6 @@
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { Button } from "@nextui-org/button";
 
-import { getFirestoreDB } from "@/app/api/firebase-admin";
 import { revalidatePath } from "next/cache";
 import dynamic from "next/dynamic";
 import WindowCardPreview from "./WindowCardPreview";
@@ -9,35 +8,28 @@ import initialPopulate from "./inital";
 import React from "react";
 import Link from "next/link";
 import WindowEditor from "./WindowEditor";
+import { query } from "@/lib/db";
 
 export default async function InitalPopulate({
-  params: { calendarId, day },
+  params,
 }: {
-  params: { calendarId: string; day: string };
+  params: Promise<{ calendarId: string; day: string }>;
 }) {
-  const configDoc = await getFirestoreDB()
-    .collection(calendarId)
-    .doc("config")
-    .get();
+  const { calendarId, day } = await params;
+  const existingConfig = await query<{ title: string }>(
+    "select title from calendars where id = $1 limit 1",
+    [calendarId],
+  );
 
-  const config = (configDoc.data() ?? initialPopulate({ calendarId })) as {
-    title: string;
-  };
+  const config =
+    existingConfig.rows[0] ?? (await initialPopulate({ calendarId }));
 
-  const windowsDocs = await getFirestoreDB()
-    .collection(calendarId)
-    .doc("config")
-    .collection("windows")
-    .listDocuments();
+  const windowsResult = await query<WindowContentData>(
+    "select day, title, text, content from windows where calendar_id = $1 order by day asc",
+    [calendarId],
+  );
 
-  const windows: WindowContentData[] = [];
-
-  for (const doc of windowsDocs) {
-    const data = (await doc.get()).data();
-    windows.push({ ...data, day: parseInt(doc.id) } as WindowContentData);
-  }
-
-  windows.sort((a, b) => a.day - b.day);
+  const windows: WindowContentData[] = windowsResult.rows;
 
   async function create(formData: FormData) {
     "use server";
@@ -46,12 +38,30 @@ export default async function InitalPopulate({
     if (!dataString) throw new Error("No data");
     const data = JSON.parse(dataString);
 
-    await getFirestoreDB()
-      .collection(calendarId)
-      .doc("config")
-      .collection("windows")
-      .doc(day)
-      .set(data);
+    const dayNumber = Number(day);
+
+    await query(
+      `insert into calendars (id, title)
+       values ($1, $2)
+       on conflict (id) do nothing`,
+      [calendarId, config.title ?? "Advent Calendar"],
+    );
+
+    await query(
+      `insert into windows (calendar_id, day, title, text, content)
+       values ($1, $2, $3, $4, $5)
+       on conflict (calendar_id, day) do update
+       set title = excluded.title,
+           text = excluded.text,
+           content = excluded.content`,
+      [
+        calendarId,
+        dayNumber,
+        data.title,
+        data.text,
+        JSON.stringify(data.content ?? []),
+      ],
+    );
 
     revalidatePath(`/c/${calendarId}/populate/${day}`);
   }

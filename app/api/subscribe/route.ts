@@ -1,18 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { requireFirebaseAdmin } from "../firebase-admin";
+import { query } from "@/lib/db";
 
 export async function POST(request: NextRequest) {
-  const admin = requireFirebaseAdmin();
-
-  if (!request.body)
-    return NextResponse.json(
-      { success: false, error: "No body provided" },
-      {
-        status: 401,
-      },
-    );
-
   const jsonData = (await request.json()) as {
     token: string;
     calendarId: string;
@@ -25,51 +15,33 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { success: false, error: "No token provided" },
       {
-        status: 401,
+        status: 400,
       },
     );
   }
-
-  const db = admin.firestore();
 
   const calendarId = jsonData.calendarId;
 
-  const docRef = db.collection(calendarId).doc("config");
-  const doc = await docRef.get();
+  const calendar = await query("select 1 from calendars where id = $1", [
+    calendarId,
+  ]);
 
-  if (!doc.exists) {
+  if (!calendar.rowCount) {
     return NextResponse.json(
       { success: false, error: "Calendar not found" },
       {
-        status: 401,
+        status: 404,
       },
     );
   }
 
-  // set single field: subscriptions
-  const subscriptions = doc.data()?.subscriptions ?? [];
-
-  // check if token already exists
-  const existingSubscription = subscriptions.find(
-    (s: any) => s.token === token,
+  await query(
+    `insert into subscriptions (calendar_id, token, hour)
+     values ($1, $2, $3)
+     on conflict (calendar_id, token)
+     do update set hour = excluded.hour`,
+    [calendarId, token, jsonData.hour ?? 8],
   );
-
-  if (existingSubscription) {
-    // replace existing subscription
-    existingSubscription.hour = jsonData.hour;
-  } else {
-    // add new subscription
-    subscriptions.push({
-      token,
-      hour: jsonData.hour,
-    });
-  }
-
-  await docRef.update({
-    subscriptions,
-  });
-
-  console.log(`Added subscription for calendar ${calendarId}`);
 
   return NextResponse.json({ success: true });
 }

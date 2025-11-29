@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { requireFirebaseAdmin } from "../firebase-admin";
+import { query } from "@/lib/db";
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
@@ -22,68 +22,45 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const admin = requireFirebaseAdmin();
+  const results = await query<{
+    calendar_id: string;
+    title: string;
+    token: string;
+  }>(
+    `select c.id as calendar_id, c.title, s.token
+     from calendars c
+     join subscriptions s on s.calendar_id = c.id
+     where coalesce(c.notifications_enabled, false) = true`,
+  );
 
   const calendarIdToTokens: Record<string, string[]> = {};
   const calendarIdToName: Record<string, string> = {};
 
-  const collections = await admin.firestore().listCollections();
-  for (let i = 0; i < collections.length; i++) {
-    const calendarId = collections[i].id;
+  results.rows.forEach((row) => {
+    if (testMode && !row.calendar_id.includes("test")) return;
 
-    if (!calendarId.includes("test") && testMode) continue;
+    calendarIdToTokens[row.calendar_id] = [
+      ...(calendarIdToTokens[row.calendar_id] ?? []),
+      row.token,
+    ];
+    calendarIdToName[row.calendar_id] = row.title;
+  });
 
-    const docRef = admin.firestore().collection(calendarId).doc("config");
-    const doc = await docRef.get();
-
-    if (!doc.exists) continue;
-
-    const docData = doc.data();
-
-    if (!docData?.notificationsEnabled) continue;
-
-    const subscriptions = docData.subscriptions ?? [];
-
-    calendarIdToTokens[calendarId] = subscriptions
-      // .filter((s: any) => s.hour === currentHour)  TODO: implement
-      .map((s: any) => s.token);
-
-    calendarIdToName[calendarId] = docData.title;
-  }
-
-  for (let calendarId in calendarIdToTokens) {
+  for (const calendarId in calendarIdToTokens) {
     console.log(
       `Calendar ${calendarId} has ${calendarIdToTokens[calendarId].length} subscriptions`,
     );
   }
 
-  let successCount = 0;
+  // Sending push notifications is intentionally not implemented here to keep
+  // the Postgres refactor simple. Integrate your preferred push provider here.
 
-  try {
-    for (let calendarId in calendarIdToTokens) {
-      if (!calendarIdToTokens[calendarId].length) continue;
-
-      console.log(`Sending notifications for ${calendarId}`);
-      const response = await admin.messaging().sendEachForMulticast({
-        notification: {
-          title: calendarIdToName[calendarId] ?? "Advent Calendar",
-          body: "The next window is now available!",
-        },
-        webpush: {
-          fcmOptions: {
-            link: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-          },
-        },
-        tokens: calendarIdToTokens[calendarId],
-      });
-
-      successCount += response.successCount;
-    }
-  } catch (error) {
-    console.log("Error sending message:", error);
-  }
-
-  console.log(`Successfully sent ${successCount} messages`);
-
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    success: true,
+    calendarsProcessed: Object.keys(calendarIdToTokens).length,
+    tokensFound: Object.values(calendarIdToTokens).reduce(
+      (acc, tokens) => acc + tokens.length,
+      0,
+    ),
+  });
 }

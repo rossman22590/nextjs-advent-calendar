@@ -1,13 +1,16 @@
-import { getFirestoreDB } from "@/app/api/firebase-admin";
+import { query } from "@/lib/db";
 
 export default async function initialPopulate({
   calendarId,
 }: {
   calendarId: string;
 }): Promise<{ title: string }> {
-  await getFirestoreDB().collection(calendarId).doc("config").set({
-    title: "Advent Calendar",
-  });
+  await query(
+    `insert into calendars (id, title)
+     values ($1, $2)
+     on conflict (id) do nothing`,
+    [calendarId, "Advent Calendar"],
+  );
 
   const windows = [];
 
@@ -28,18 +31,27 @@ export default async function initialPopulate({
 
   await Promise.all(
     windows.map((window) =>
-      getFirestoreDB()
-        .collection(calendarId)
-        .doc("config")
-        .collection("windows")
-        .doc(`${window.day}`)
-        .set(window),
+      query(
+        `insert into windows (calendar_id, day, title, text, content)
+         values ($1, $2, $3, $4, $5)
+         on conflict (calendar_id, day) do nothing`,
+        [
+          calendarId,
+          window.day,
+          window.title,
+          window.text,
+          JSON.stringify(window.content),
+        ],
+      ),
     ),
   );
 
   console.log("Done");
 
-  const doc = await getFirestoreDB().collection(calendarId).doc("config").get();
+  const doc = await query<{ title: string }>(
+    "select title from calendars where id = $1 limit 1",
+    [calendarId],
+  );
 
-  return doc.data() as { title: string };
+  return { title: doc.rows[0]?.title ?? "Advent Calendar" };
 }

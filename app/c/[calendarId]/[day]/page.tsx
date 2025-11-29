@@ -1,28 +1,37 @@
-import { getFirestoreDB } from "@/app/api/firebase-admin";
 import { isOpen } from "@/app/utils/calendarUtils";
 import WindowContent from "@/components/content/WindowContent";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import Link from "next/link";
+import { query } from "@/lib/db";
 
 interface Params {
-  params: {
+  params: Promise<{
     day: string;
     calendarId: string;
-  };
+  }>;
 }
 
 export default async function Page({
-  params: { calendarId, day },
+  params,
 }: Params): Promise<JSX.Element> {
-  const document = await getFirestoreDB()
-    .collection(calendarId)
-    .doc("config")
-    .collection("windows")
-    .doc(day)
-    .get();
+  const { calendarId, day } = await params;
+  const dayNumber = Number(day);
+  if (!Number.isInteger(dayNumber)) {
+    return (
+      <div className="flex items-center justify-center text-primary text-2xl flex-col gap-4">
+        <div>Invalid day</div>
+        <div className="h-96">:(</div>
+      </div>
+    );
+  }
 
-  if (!document.exists) {
+  const windowResult = await query<WindowContentData>(
+    "select day, title, text, content from windows where calendar_id = $1 and day = $2 limit 1",
+    [calendarId, dayNumber],
+  );
+
+  if (!windowResult.rowCount) {
     return (
       <div className="flex items-center justify-center text-primary text-2xl flex-col gap-4">
         <div>Window not found</div>
@@ -31,7 +40,7 @@ export default async function Page({
     );
   }
 
-  const win = document.data() as WindowContentData;
+  const win = windowResult.rows[0];
 
   return (
     <div className="flex flex-col gap-8 items-stretch justify-center">

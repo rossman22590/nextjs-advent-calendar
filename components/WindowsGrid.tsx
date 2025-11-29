@@ -5,7 +5,7 @@ import CalendarWindow from "./CalendarWindow";
 import { useParams } from "next/navigation";
 import {
   getTodayDay,
-  isCalendarMonth,
+  isCalendarPeriod,
   isDayToday,
   isOpen,
 } from "@/app/utils/calendarUtils";
@@ -19,7 +19,7 @@ export default function WindowsGrid({ windows }: WindowsGridProps) {
   const params = useParams();
 
   useEffect(() => {
-    if (!isCalendarMonth()) return;
+    if (!isCalendarPeriod()) return;
 
     const today = getTodayDay();
 
@@ -40,14 +40,15 @@ export default function WindowsGrid({ windows }: WindowsGridProps) {
   }, [params]);
 
   return (
-    <div className="grid gap-7 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid gap-7 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
       {windows.map((window: any) => (
-        <CalendarWindow
-          key={window.day}
-          day={window.day}
-          disabled={!isOpen(window.day)}
-          emphasized={isDayToday(window.day)}
-        />
+        <div key={window.day} className="aspect-square">
+          <CalendarWindow
+            day={window.day}
+            disabled={!isOpen(window.day)}
+            emphasized={isDayToday(window.day)}
+          />
+        </div>
       ))}
     </div>
   );

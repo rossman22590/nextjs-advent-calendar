@@ -1,36 +1,44 @@
-import { YEAR } from "@/config/settings";
+import { START_DATE_ISO, TOTAL_DAYS } from "@/config/settings";
 
 export function getDebugDate() {
-  if (process.env.NODE_ENV !== "development") {
-    return null;
-  }
+  const debug = process.env.NEXT_PUBLIC_DEBUG_DATE;
+  if (!debug) return null;
+  const parsed = new Date(debug);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
 
-  // 2023-12-16
-  return new Date(2023, 11, 16);
+function getStartDate() {
+  return new Date(START_DATE_ISO);
 }
 
 export function getTodayDay() {
   const date = getDebugDate() ?? new Date();
-  return date.getDate();
+  const start = getStartDate();
+  const diffMs = date.getTime() - start.getTime();
+  if (diffMs < 0) return 0;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  return diffDays + 1;
 }
 
 export function isDayToday(day: number) {
-  return isCalendarMonth() && day === getTodayDay();
+  return isCalendarPeriod() && day === getTodayDay();
 }
 
-function isPast24th() {
-  const the24th = new Date(YEAR, 11, 24);
-  return new Date() > the24th;
+function getEndDate() {
+  const end = getStartDate();
+  end.setDate(end.getDate() + TOTAL_DAYS - 1);
+  return end;
 }
 
-export function isCalendarMonth() {
+export function isCalendarPeriod() {
   const date = getDebugDate() ?? new Date();
-  return date.getMonth() === 11 || isPast24th();
+  return date >= getStartDate();
 }
 
 export function isOpen(day: number | string) {
   if (typeof day === "string") {
     day = parseInt(day);
   }
-  return (isCalendarMonth() && day <= getTodayDay()) || isPast24th();
+  const today = Math.min(getTodayDay(), TOTAL_DAYS);
+  return isCalendarPeriod() && day <= today && day >= 1;
 }
