@@ -14,7 +14,13 @@ export default function RegisterPage() {
 
   async function handleSubmit(formData: FormData) {
     try {
-      await authAction("register", formData);
+      const result = await authAction("register", formData);
+      
+      // If result is returned (not redirected), show error
+      if (result && !result.success) {
+        setErrorMessage(result.error || "Registration failed");
+        setIsOpen(true);
+      }
     } catch (error: any) {
       // Ignore Next.js redirect errors
       if (error?.message?.includes("NEXT_REDIRECT")) {

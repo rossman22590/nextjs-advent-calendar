@@ -19,7 +19,13 @@ export default function LoginPage() {
 
   async function handleSubmit(formData: FormData) {
     try {
-      await authAction("login", formData);
+      const result = await authAction("login", formData);
+      
+      // If result is returned (not redirected), show error
+      if (result && !result.success) {
+        setErrorMessage(result.error || "Login failed");
+        setIsOpen(true);
+      }
     } catch (error: any) {
       // Ignore Next.js redirect errors
       if (error?.message?.includes("NEXT_REDIRECT")) {
