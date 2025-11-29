@@ -1,6 +1,7 @@
 import NotificationManager from "@/components/NotificationManager";
 import WindowsGrid from "@/components/WindowsGrid";
 import { query } from "@/lib/db";
+import { getSession } from "@/lib/auth";
 
 interface PageProps {
   params: Promise<{
@@ -10,6 +11,8 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { calendarId } = await params;
+  const session = await getSession();
+  
   const configResult = await query<{
     title: string;
     notifications_enabled: boolean | null;
@@ -37,7 +40,19 @@ export default async function Page({ params }: PageProps) {
     [calendarId],
   );
 
-  const windows: WindowContentData[] = windowsResult.rows;
+  let openedDays: number[] = [];
+  if (session) {
+    const openedResult = await query<{ day: number }>(
+      "select day from opened_windows where calendar_id = $1 and user_id = $2",
+      [calendarId, session.userId],
+    );
+    openedDays = openedResult.rows.map((r) => r.day);
+  }
+
+  const windows: WindowContentData[] = windowsResult.rows.map((w) => ({
+    ...w,
+    opened: openedDays.includes(w.day),
+  }));
 
   return (
     <div className="flex flex-col gap-8 items-stretch justify-center">

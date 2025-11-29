@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import CalendarWindow from "./CalendarWindow";
+import FlipCard from "./FlipCard";
 import { useParams } from "next/navigation";
 import {
   getTodayDay,
@@ -23,7 +23,7 @@ export default function WindowsGrid({ windows }: WindowsGridProps) {
 
     const today = getTodayDay();
 
-    const hash = window.location.hash; // day-x
+    const hash = window.location.hash;
     const dayToScrollTo = hash ? parseInt(hash.split("-")[1]) : undefined;
 
     if (!dayToScrollTo) {
@@ -40,15 +40,17 @@ export default function WindowsGrid({ windows }: WindowsGridProps) {
   }, [params]);
 
   return (
-    <div className="grid gap-7 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
       {windows.map((window: any) => (
-        <div key={window.day} className="aspect-square">
-          <CalendarWindow
-            day={window.day}
-            disabled={!isOpen(window.day)}
-            emphasized={isDayToday(window.day)}
-          />
-        </div>
+        <FlipCard
+          key={window.day}
+          day={window.day}
+          disabled={!isOpen(window.day)}
+          emphasized={isDayToday(window.day)}
+          opened={window.opened}
+          title={window.title}
+          text={window.text}
+        />
       ))}
     </div>
   );

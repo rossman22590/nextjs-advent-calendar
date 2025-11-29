@@ -35,7 +35,7 @@ export default function RootLayout({
         )}
       >
         <div className="relative flex flex-col h-screen">
-          <main className="container w-full max-w-xl mx-auto pt-16 px-6 flex-grow">
+          <main className="container w-full max-w-4xl mx-auto pt-16 px-6 flex-grow">
             <Suspense
               fallback={
                 <div className="flex items-center justify-center h-screen gap-2">

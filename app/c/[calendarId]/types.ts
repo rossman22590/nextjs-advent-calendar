@@ -5,4 +5,5 @@ interface WindowContentData {
   content: {
     type: string;
   }[];
+  opened?: boolean;
 }
