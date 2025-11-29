@@ -2,6 +2,7 @@
 
 import { createSession, registerUser, verifyUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 type Mode = "login" | "register";
 
@@ -14,7 +15,14 @@ export async function authAction(mode: Mode, formData: FormData) {
   }
 
   if (mode === "register") {
-    const userId = await registerUser(email, password);
+    // Get IP address from headers
+    const headersList = await headers();
+    const ipAddress = 
+      headersList.get("x-forwarded-for")?.split(",")[0].trim() ||
+      headersList.get("x-real-ip") ||
+      "unknown";
+    
+    const userId = await registerUser(email, password, ipAddress);
     await createSession(userId);
   } else {
     const userId = await verifyUser(email, password);

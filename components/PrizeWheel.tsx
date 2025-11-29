@@ -105,8 +105,8 @@ export default function PrizeWheel({
         {/* Pointer */}
         <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
           <div className="relative">
-            <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[40px] border-l-transparent border-r-transparent border-t-yellow-400 drop-shadow-lg" />
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[24px] border-l-transparent border-r-transparent border-t-yellow-300" />
+            <div className="w-0 h-0 border-l-[24px] border-r-[24px] border-t-[48px] border-l-transparent border-r-transparent border-t-yellow-400 drop-shadow-lg" />
+            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[16px] border-r-[16px] border-t-[32px] border-l-transparent border-r-transparent border-t-yellow-300" />
           </div>
         </div>
 
@@ -131,7 +131,7 @@ export default function PrizeWheel({
 
         {/* Main wheel */}
         <div
-          className="w-80 h-80 sm:w-[420px] sm:h-[420px] rounded-full relative overflow-hidden shadow-2xl"
+          className="w-[30rem] h-[30rem] sm:w-[36rem] sm:h-[36rem] rounded-full relative overflow-hidden shadow-2xl"
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning
@@ -185,7 +185,7 @@ export default function PrizeWheel({
                   }`}
                 >
                   <span
-                    className={`text-xl sm:text-2xl ${
+                    className={`text-3xl sm:text-4xl ${
                       isSpecial ? "animate-bounce" : ""
                     }`}
                   >
@@ -194,14 +194,14 @@ export default function PrizeWheel({
                   <span
                     className={`font-bold text-white text-center leading-tight ${
                       isSpecial
-                        ? "text-xs sm:text-sm drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-                        : "text-[10px] sm:text-xs"
+                        ? "text-base sm:text-lg drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+                        : "text-sm sm:text-base"
                     }`}
                     style={{
                       textShadow: isSpecial
                         ? "0 0 10px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.5)"
                         : "1px 1px 3px rgba(0,0,0,0.5)",
-                      maxWidth: "60px",
+                      maxWidth: "110px",
                     }}
                   >
                     {prize.name}
@@ -212,9 +212,9 @@ export default function PrizeWheel({
           })}
 
           {/* Center piece */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-xl flex items-center justify-center border-4 border-yellow-200">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-inner">
-              <span className="text-3xl">✨</span>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-36 sm:h-36 bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-xl flex items-center justify-center border-4 border-yellow-200">
+            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center shadow-inner">
+              <span className="text-6xl sm:text-7xl">🎯</span>
             </div>
           </div>
         </div>

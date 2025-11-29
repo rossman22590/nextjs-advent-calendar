@@ -75,11 +75,11 @@ export default function RootLayout({
               <Link
                 isExternal
                 className="flex items-center gap-1 text-current"
-                href="https://www.github.com/sg10"
-                title="sg10 on GitHub"
+                href="https://getmytsi.org"
+                title="TSI"
               >
                 <span className="text-default-600">Powered by</span>
-                <p className="text-primary">sg10</p>
+                <p className="text-primary">TSI</p>
               </Link>
             </footer>
           </div>

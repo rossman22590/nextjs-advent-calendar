@@ -2,6 +2,8 @@ import { query } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import PrizeWheel from "@/components/PrizeWheel";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@nextui-org/button";
 
 interface PageProps {
   params: Promise<{
@@ -51,6 +53,16 @@ export default async function ChancePage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8 py-8">
+      <div className="w-full flex items-center justify-start">
+        <Button
+          as={Link}
+          href={`/c/${calendarId}`}
+          variant="light"
+          className="text-white"
+        >
+          ← Back to calendar
+        </Button>
+      </div>
       <h1 className="text-3xl font-bold text-pink-500">Spin to Win!</h1>
       <PrizeWheel
         prizes={prizes}

@@ -63,7 +63,7 @@ export async function destroySession() {
   cookieStore.delete(SESSION_COOKIE);
 }
 
-export async function registerUser(email: string, password: string) {
+export async function registerUser(email: string, password: string, ipAddress?: string) {
   const hash = await bcrypt.hash(password, 10);
   const id = crypto.randomUUID();
 
@@ -75,11 +75,31 @@ export async function registerUser(email: string, password: string) {
     throw new Error("Email already registered");
   }
 
+  // Check if IPLOCK is enabled
+  if (process.env.IPLOCK === "true" && ipAddress) {
+    const ipExists = await query<{ user_id: string }>(
+      "select user_id from user_ips where ip_address = $1 limit 1",
+      [ipAddress],
+    );
+    if (ipExists.rowCount) {
+      throw new Error("An account has already been created from this IP address");
+    }
+  }
+
   await query(
     `insert into users (id, email, password_hash)
      values ($1, $2, $3)`,
     [id, email.toLowerCase(), hash],
   );
+
+  // Store IP if IPLOCK is enabled and IP is provided
+  if (process.env.IPLOCK === "true" && ipAddress) {
+    await query(
+      `insert into user_ips (user_id, ip_address)
+       values ($1, $2)`,
+      [id, ipAddress],
+    );
+  }
 
   return id;
 }

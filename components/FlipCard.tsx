@@ -46,9 +46,9 @@ export default function FlipCard({
   if (opened) {
     return (
       <div id={`day-${day}`} className="aspect-square">
-        <div className="w-full h-full rounded-2xl shadow-lg bg-gray-200 flex flex-col items-center justify-center p-6">
-          <span className="text-2xl font-bold text-gray-400">Day {day}</span>
-          <span className="text-sm text-gray-400 mt-2">Already opened</span>
+        <div className="w-full h-full rounded-2xl shadow-lg bg-gradient-to-br from-amber-700 via-yellow-600 to-amber-600 flex flex-col items-center justify-center p-6 border-2 border-amber-600/50">
+          <span className="text-2xl font-bold text-amber-900">Day {day}</span>
+          <span className="text-sm text-amber-800 mt-2">Already opened</span>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ export default function FlipCard({
       >
         {/* Front of card */}
         <div
-          className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 backdrop-blur-md border-2
+          className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 backdrop-blur-md border-2 group
             ${disabled 
               ? "opacity-60 bg-gradient-to-br from-gray-700/80 to-gray-800/80 border-gray-600/50" 
               : "bg-gradient-to-br from-gray-850/90 via-purple-900/90 to-pink-900/90 hover:shadow-3xl hover:from-purple-800/95 hover:to-pink-800/95 border-purple-600/30"
@@ -75,13 +75,13 @@ export default function FlipCard({
             ${emphasized ? "ring-4 ring-purple-500 ring-opacity-60 shadow-purple-500/50" : ""}
           `}
         >
-          <span className={`text-2xl sm:text-3xl font-bold mb-4 ${getIconColor(day)}`}>
+          <span className={`text-2xl sm:text-3xl font-bold mb-4 ${getIconColor(day)} group-hover:!text-white transition-colors`}>
             Day {day}
           </span>
           <div className="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center">
             <FontAwesomeIcon
               icon={getIconForDay(day)}
-              className={`w-full h-full ${getIconColor(day)}`}
+              className={`w-full h-full ${getIconColor(day)} group-hover:!text-white transition-colors`}
             />
           </div>
           {disabled && (
