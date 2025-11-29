@@ -54,7 +54,7 @@ export default async function Page({ params }: Params): Promise<JSX.Element> {
               </h1>
             </CardHeader>
             <CardBody>
-              <p className="whitespace-pre-wrap">{win.text}</p>
+              <p className="whitespace-pre-wrap text-lg px-8">{win.text}</p>
             </CardBody>
             <WindowContent content={win.content} />
           </div>

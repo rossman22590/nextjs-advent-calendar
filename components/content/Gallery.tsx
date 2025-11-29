@@ -55,7 +55,7 @@ export default function MiniGallery({
   }));
 
   return (
-    <div>
+    <div className="max-w-2xl mx-auto">
       <RowsPhotoAlbum
         photos={photos}
         onClick={({ event, photo, index }) => handleClick(index)}

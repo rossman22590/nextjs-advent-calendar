@@ -105,7 +105,7 @@ export default function FlipCard({
             ${emphasized ? "ring-4 ring-purple-400 ring-opacity-70 shadow-purple-400/50" : ""}
          `}
         >
-          <span className="text-xl sm:text-2xl font-bold mb-2 text-center">
+          <span className="text-lg sm:text-xl font-bold mb-2 text-center">
             {title || `Day ${day}`}
           </span>
           <p className="text-xs sm:text-sm text-center line-clamp-2 mb-4 opacity-90">

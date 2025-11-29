@@ -11,7 +11,7 @@ export default function SingleImage({ url }: { url: string }): JSX.Element {
     <img // eslint-disable-line @next/next/no-img-element
       src={urlReplaced}
       alt="Calendar day image"
-      className="w-full"
+      className="w-full max-w-2xl mx-auto"
       width={500}
       height={500}
     />
