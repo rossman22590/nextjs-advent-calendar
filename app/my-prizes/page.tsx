@@ -148,7 +148,7 @@ export default async function MyPrizesPage() {
             >
               <div className="w-full aspect-video relative overflow-hidden rounded-t-lg">
                 <Image
-                  src={`https://picsum.photos/seed/${prize.prize_name}/400/300`}
+                  src="https://img.mytsi.org/i/HAWx1053.png"
                   alt={prize.prize_name}
                   fill
                   className="object-cover"
@@ -178,8 +178,8 @@ export default async function MyPrizesPage() {
                 </p>
                 <div className="mt-4">
                   <DownloadButton 
-                    imageUrl={`https://picsum.photos/seed/${prize.prize_name}/400/300`}
-                    fileName={`${prize.prize_name.replace(/\s+/g, '_')}.jpg`}
+                    imageUrl="https://img.mytsi.org/i/HAWx1053.png"
+                    fileName={`${prize.prize_name.replace(/\s+/g, '_')}.png`}
                   />
                 </div>
               </CardBody>
