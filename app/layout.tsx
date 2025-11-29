@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     default: "Pixio , Machine and AI Tutor Advent Calendar",
     template: `%s - Advent Calendar`,
   },
-  description: "Your advent calendar for this year. Open a new surprise each day with TSI. WHat will you get?",
+  description: "Your advent calendar for this year. Open a new surprise each day with TSI. What will you get?",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
