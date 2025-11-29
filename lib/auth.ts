@@ -108,6 +108,32 @@ export async function verifyUser(
   email: string,
   password: string,
 ): Promise<string | null> {
+  // Check if logging in as admin
+  if (process.env.ADMIN && process.env.ADMIN_PW && email.toLowerCase() === process.env.ADMIN.toLowerCase()) {
+    if (password === process.env.ADMIN_PW) {
+      // Find or create admin user
+      const adminResult = await query<{ id: string }>(
+        "select id from users where email = $1 limit 1",
+        [process.env.ADMIN.toLowerCase()],
+      );
+
+      if (adminResult.rowCount) {
+        return adminResult.rows[0].id;
+      }
+
+      // Create admin user if doesn't exist
+      const adminId = crypto.randomUUID();
+      const hash = await bcrypt.hash(process.env.ADMIN_PW, 10);
+      await query(
+        `insert into users (id, email, password_hash)
+         values ($1, $2, $3)`,
+        [adminId, process.env.ADMIN.toLowerCase(), hash],
+      );
+      return adminId;
+    }
+    return null;
+  }
+
   const result = await query<{ id: string; password_hash: string }>(
     "select id, password_hash from users where email = $1 limit 1",
     [email.toLowerCase()],
