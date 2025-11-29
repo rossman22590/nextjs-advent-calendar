@@ -24,29 +24,32 @@ export const metadata: Metadata = {
     default: "Pixio , Machine and AI Tutor Advent Calendar",
     template: `%s - Advent Calendar`,
   },
-  description: "Your advent calendar for this year. Open a new surprise each day with TSI. What will you get?",
+  description:
+    "Your advent calendar for this year. Open a new surprise each day with TSI. What will you get?",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
   },
   openGraph: {
-    title: "TSI Advent Calendar",
-    description: "Open a new surprise each day with TSI.",
+    title: "Pixio , Machine and AI Tutor Advent Calendar",
+    description:
+      "Your advent calendar for this year. Open a new surprise each day with TSI. What will you get?",
     url: "https://tsiadvent.example.com",
-    siteName: "TSI Advent Calendar",
+    siteName: "Pixio , Machine and AI Tutor Advent Calendar",
     images: [
       {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "TSI Advent Calendar",
+        alt: "Pixio , Machine and AI Tutor Advent Calendar",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TSI Advent Calendar",
-    description: "Open a new surprise each day with TSI.",
+    title: "Pixio , Machine and AI Tutor Advent Calendar",
+    description:
+      "Your advent calendar for this year. Open a new surprise each day with TSI. What will you get?",
     images: ["/og-image.svg"],
   },
 };
