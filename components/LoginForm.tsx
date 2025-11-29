@@ -25,32 +25,41 @@ export default function LoginForm() {
     router.push(`/c/${data.code}`); // TODO some mapping...
 
   return (
-    <Card>
-      <CardBody>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-full max-w-sm mx-auto flex flex-col gap-4 items-center justify-center">
-            <div className="p-8">
-              <FontAwesomeIcon
-                icon={faCandyCane}
-                className="h-20 w-20 text-primary"
-              />
+    <div className="flex items-center justify-center min-h-[80vh]">
+      <div className="max-w-lg w-full">
+        <div className="flex flex-col gap-5 bg-[#0a0015] backdrop-blur-2xl rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] p-10 border border-purple-500/30">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="w-full flex flex-col gap-6 items-center justify-center">
+              <div className="p-6">
+                <FontAwesomeIcon
+                  icon={faCandyCane}
+                  className="h-20 w-20 text-pink-400"
+                />
+              </div>
+              <p className="text-lg text-white text-center">Please enter the code to open your advent calendar.</p>
+              <div className="flex w-full gap-4">
+                <Input
+                  size="lg"
+                  type="text"
+                  placeholder="Code"
+                  variant="bordered"
+                  className="w-full"
+                  classNames={{
+                    input: "text-white placeholder:text-gray-400",
+                    label: "!text-pink-300 group-data-[filled=true]:!text-pink-300",
+                    inputWrapper: "bg-white/10 border-2 border-white/30 hover:border-white/50 focus-within:border-pink-400 data-[hover=true]:bg-white/10"
+                  }}
+                  style={{ color: 'white' } as any}
+                  {...register("code", { required: true })}
+                />
+              </div>
+              <Button size="lg" type="submit" color="primary" className="w-full font-bold text-xl">
+                Enter
+              </Button>
             </div>
-            <p>Please enter the code to open your advent calendar.</p>
-            <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
-              <Input
-                size="lg"
-                type="code"
-                placeholder="Code"
-                className="w-200 mx-auto"
-                {...register("code", { required: true })}
-              />
-            </div>
-            <Button size="lg" type="submit">
-              Enter
-            </Button>
-          </div>
-        </form>
-      </CardBody>
-    </Card>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
