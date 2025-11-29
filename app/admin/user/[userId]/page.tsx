@@ -150,7 +150,7 @@ export default async function AdminUserPage({ params }: Params) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Wheel Prizes */}
-          {wheelPrizes.map((prize, index) => (
+          {wheelPrizes.map((prize: WheelPrize, index: number) => (
             <Card 
               key={`wheel-${prize.calendar_id}-${index}`}
               className="hover:shadow-xl transition-shadow border-2 border-purple-300"
