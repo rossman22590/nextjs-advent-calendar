@@ -115,11 +115,13 @@ export default async function MyPrizesPage() {
 
   return (
     <div className="flex flex-col gap-8 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-bold text-white">My Claimed Prizes</h1>
-        <Button as={Link} href="/c/TSI" color="secondary">
-          Back to Calendar
-        </Button>
+      <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-4">
+          <Button as={Link} href="/c/TSI" color="secondary">
+            Back to Calendar
+          </Button>
+          <h1 className="text-4xl font-bold text-white">My Claimed Prizes</h1>
+        </div>
       </div>
 
       {error ? (
