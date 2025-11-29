@@ -9,6 +9,9 @@ const AuthBar = dynamic(
     loading: () => <div className="h-8" />,
   }
 ) as any;
+
+import BackgroundEffects from "@/components/BackgroundEffects";
+
 import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@nextui-org/link";
@@ -24,8 +27,7 @@ export const metadata: Metadata = {
   description: "Your advent calendar for this year.",
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
 };
 
@@ -39,40 +41,48 @@ export default function RootLayout({
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen bg-slate-950 font-sans antialiased",
           fontSans.variable,
         )}
       >
         <div className="relative flex flex-col h-screen">
-          <main className="container w-full max-w-4xl mx-auto pt-16 px-6 flex-grow">
-            <AuthBar />
-            <Suspense
-              fallback={
-                <div className="flex items-center justify-center h-screen gap-2">
-                  <p className="text-primary">
-                    <FontAwesomeIcon
-                      icon={faSnowflake}
-                      className="mr-2 w-6 h-6"
-                    />
-                  </p>
-                  <p className="text-primary">Loading...</p>
-                </div>
-              }
-            >
-              {children}
-            </Suspense>
-          </main>
-          <footer className="w-full flex items-center justify-center py-3">
-            <Link
-              isExternal
-              className="flex items-center gap-1 text-current"
-              href="https://www.github.com/sg10"
-              title="sg10 on GitHub"
-            >
-              <span className="text-default-600">Powered by</span>
-              <p className="text-primary">sg10</p>
-            </Link>
-          </footer>
+          {/* 3D GridScan Background */}
+          <div className="absolute inset-0 z-0">
+            <BackgroundEffects />
+          </div>
+          
+          {/* Main Content */}
+          <div className="relative z-10 flex flex-col h-screen">
+            <main className="container w-full max-w-4xl mx-auto pt-16 px-6 flex-grow">
+              <AuthBar />
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center h-screen gap-2">
+                    <p className="text-primary">
+                      <FontAwesomeIcon
+                        icon={faSnowflake}
+                        className="mr-2 w-6 h-6"
+                      />
+                    </p>
+                    <p className="text-primary">Loading...</p>
+                  </div>
+                }
+              >
+                {children}
+              </Suspense>
+            </main>
+            <footer className="w-full flex items-center justify-center py-3">
+              <Link
+                isExternal
+                className="flex items-center gap-1 text-current"
+                href="https://www.github.com/sg10"
+                title="sg10 on GitHub"
+              >
+                <span className="text-default-600">Powered by</span>
+                <p className="text-primary">sg10</p>
+              </Link>
+            </footer>
+          </div>
         </div>
       </body>
     </html>

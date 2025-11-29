@@ -93,9 +93,9 @@ export default function PrizeWheel({
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      {/* Glowing background effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-pink-100/50 via-purple-100/30 to-yellow-100/50 -z-10 blur-3xl" />
+    <div className="relative flex flex-col items-center gap-8">
+      {/* Glowing background effect (dark) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-purple-950/60 to-slate-950 -z-10 blur-3xl opacity-80" />
 
       {/* Wheel container */}
       <div className="relative">

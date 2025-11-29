@@ -9,7 +9,7 @@ export default async function AuthBar() {
     <div className="flex items-center justify-end gap-3 py-2">
       {session ? (
         <>
-          <span className="text-sm text-default-600">
+          <span className="text-sm text-white drop-shadow">
             {session.email ?? "Logged in"}
           </span>
           <form action={logout}>

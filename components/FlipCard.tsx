@@ -67,12 +67,12 @@ export default function FlipCard({
       >
         {/* Front of card */}
         <div
-          className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-lg flex flex-col items-center justify-center p-6
+          className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-2xl flex flex-col items-center justify-center p-6 backdrop-blur-md border-2
             ${disabled 
-              ? "opacity-50 bg-gradient-to-br from-gray-100 to-gray-200" 
-              : "bg-gradient-to-br from-white via-pink-50 to-purple-50 hover:shadow-xl hover:from-pink-50 hover:to-purple-100"
+              ? "opacity-60 bg-gradient-to-br from-gray-700/80 to-gray-800/80 border-gray-600/50" 
+              : "bg-gradient-to-br from-gray-850/90 via-purple-900/90 to-pink-900/90 hover:shadow-3xl hover:from-purple-800/95 hover:to-pink-800/95 border-purple-600/30"
             }
-            ${emphasized ? "ring-4 ring-pink-500 ring-opacity-50" : ""}
+            ${emphasized ? "ring-4 ring-purple-500 ring-opacity-60 shadow-purple-500/50" : ""}
           `}
         >
           <span className={`text-2xl sm:text-3xl font-bold mb-4 ${getIconColor(day)}`}>
@@ -93,8 +93,8 @@ export default function FlipCard({
 
         {/* Back of card */}
         <div
-          className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl shadow-lg bg-gradient-to-br from-pink-500 via-purple-500 to-yellow-500 flex flex-col items-center justify-center p-6 text-white
-            ${emphasized ? "ring-4 ring-pink-300 ring-opacity-50" : ""}
+          className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl shadow-2xl bg-gradient-to-br from-purple-700/95 via-pink-700/95 to-purple-800/95 flex flex-col items-center justify-center p-6 text-white backdrop-blur-md border-2 border-purple-500/30
+            ${emphasized ? "ring-4 ring-purple-400 ring-opacity-70 shadow-purple-400/50" : ""}
          `}
         >
           <span className="text-xl sm:text-2xl font-bold mb-2 text-center">
