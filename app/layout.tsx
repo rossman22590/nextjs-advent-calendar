@@ -29,6 +29,26 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
   },
+  openGraph: {
+    title: "TSI Advent Calendar",
+    description: "Open a new surprise each day with TSI.",
+    url: "https://tsiadvent.example.com",
+    siteName: "TSI Advent Calendar",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "TSI Advent Calendar",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TSI Advent Calendar",
+    description: "Open a new surprise each day with TSI.",
+    images: ["/og-image.svg"],
+  },
 };
 
 export default function RootLayout({

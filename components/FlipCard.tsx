@@ -35,11 +35,19 @@ export default function FlipCard({
 
   const handleOpen = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    await fetch(`/api/open-window`, {
+    
+    const response = await fetch(`/api/open-window`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ calendarId, day }),
     });
+
+    if (response.status === 401) {
+      // Redirect to login if not authenticated
+      router.push(`/login?from=/c/${calendarId}/${day}`);
+      return;
+    }
+
     router.push(`/c/${calendarId}/${day}`);
   };
 
