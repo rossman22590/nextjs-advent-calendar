@@ -1,58 +1,67 @@
-# Next.js Advent Calendar
+# Pixio / Machine & AI Tutor Advent Calendar
 
-This is a small advent calendar web app that allows to create and populate 24 windows with digital content to make friends, family and strangers happy during advent.
+A Next.js advent calendar with daily unlockable windows, a prize wheel, and a simple email/password auth flow. Backed by Postgres—no Firebase required.
 
+## Highlights
+- 24-day schedule starting on **2025-11-27** (configurable) with future days locked automatically.
+- Window content types: text, image, video-file, YouTube, Spotify, gallery, link, placeholder, plus optional quiz gate. See `type.md` for copy/paste JSON.
+- Prize wheel at `/c/[calendarId]/chance` with tracked spins per user.
+- Admin view (`/admin`) gated by `ADMIN` email env var to inspect users, claimed days, and wheel prizes.
+- Postgres migrations included; push notifications left as stubs for your own provider.
+- Dark, pink/purple UI with OG preview at `/og-image.svg`.
 
-<img src="demo/overview.png" alt="Days overview" width="350" />
-<img src="demo/content.png" alt="YouTube content window" width="350" />
+## Stack
+- Next.js 15 (App Router) + TypeScript
+- NextUI v2 + TailwindCSS
+- Postgres via `pg`
+- Font Awesome, Framer Motion
 
-
-## Features
-
-- multiple advent calendars
-- various content types: image, link, YouTube embed, Spotify embed, video embed, quiz
-- (hacky) editor to populate the calendars with content
-- Postgres-backed storage (no Firebase required)
-
-
-## Technologies Used
-
-- [Next.js 13](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- Postgres (`pg`)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
-
-
-### Install dependencies
-
+## Quickstart
+1) Install deps (project uses Yarn):
 ```bash
-npm install
+yarn install
+```
+2) Set env vars (see `.env.example` if present):
+- `DATABASE_URL` (Postgres connection string)
+- `ADMIN` (email that is treated as admin in `/admin`)
+- Optional: `NEXT_PUBLIC_DEBUG_DATE=2025-11-27` to simulate a date for local testing.
+3) Run migrations:
+```bash
+yarn migrate
+```
+4) Start dev server:
+```bash
+yarn dev
 ```
 
-Set `DATABASE_URL` in your environment to point at your Postgres instance.
+## Calendar rules
+- Start date and length are set in `config/settings.ts` (`START_DATE_ISO`, `TOTAL_DAYS`).
+- `isOpen(day)` only returns true for days on/after the start date and not beyond the current day (or debug date).
+- Opened/visited state is also stored client-side in `localStorage` per calendar.
 
-### Database schema
-
-Run the migrations (requires `DATABASE_URL`):
-
-```bash
-npm run migrate
+## Content JSON cheatsheet
+Each window stores a `content` array. Common snippets (more in `type.md`):
+```json
+[{"type":"text","text":"Hello"}]
+[{"type":"image","url":"https://example.com/img.jpg"}]
+[{"type":"youtube","url":"https://youtu.be/xyz"}]
+[{"type":"gallery","images":["https://.../1.jpg","https://.../2.jpg"]}]
+[{"type":"placeholder","text":"Coming soon"}]
 ```
+Quiz gate uses two items: first a quiz object, second the unlocked content.
 
-The migration files live in `migrations/` if you want to inspect or tweak them.
+## Auth
+- Simple email/password registration and login stored in Postgres (`users`, `sessions` tables).
+- Admin checks compare session email to `process.env.ADMIN`.
 
-Push notifications are left as a stub in `/components/NotificationManager.tsx` and `/app/api/cron/route.ts`; hook these up to your own push provider if you need them.
+## Scripts
+- `yarn dev` – run locally
+- `yarn build` / `yarn start` – production build/serve
+- `yarn migrate` – apply SQL migrations in `/migrations`
 
-### Run the development server
+## OG / Social
+- OpenGraph & Twitter cards configured in `app/layout.tsx` and point to `/og-image.svg`.
 
-```bash
-npm run dev
-```
-
-## License
-
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+## Notes
+- Push notifications are stubbed in `/components/NotificationManager.tsx` and `/app/api/cron/route.ts`; wire in your own provider if needed.
+- Prize wheel visuals and emoji are in `components/PrizeWheel.tsx`; customize colors/segments in the DB `prizes` table.
