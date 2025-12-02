@@ -32,6 +32,11 @@ export default function PrizeWheel({
   const [showResult, setShowResult] = useState(hasSpun);
   const router = useRouter();
 
+  // DEBUG: Log prizes received from server
+  if (typeof window !== 'undefined') {
+    console.log('🎨 Prizes received in PrizeWheel component:', prizes);
+  }
+
   const segmentAngle = 360 / prizes.length;
 
   const spin = async () => {
