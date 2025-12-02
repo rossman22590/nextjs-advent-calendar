@@ -8,6 +8,12 @@ type PrizeRow = {
   weight: number | string;
 };
 
+type Prize = {
+  id: number;
+  name: string;
+  weight: number;
+};
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
@@ -50,7 +56,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No prizes available" }, { status: 400 });
     }
 
-    const prizes = prizesResult.rows.map((p: PrizeRow) => ({
+    const prizes: Prize[] = prizesResult.rows.map((p: PrizeRow): Prize => ({
       ...p,
       weight: typeof p.weight === "number" ? p.weight : parseFloat(p.weight), // Ensure weight is a number, not string
     }));
