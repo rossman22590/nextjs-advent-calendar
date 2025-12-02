@@ -39,7 +39,7 @@ export default function SpinInstructionsModal() {
             <div>
               <h3 className="font-bold text-lg mb-2">Spin the Wheel</h3>
               <p className="text-gray-600">
-                Click the <span className="font-semibold">"SPIN TO WIN!"</span> button to spin the prize wheel. 
+                Click the <span className="font-semibold">&quot;SPIN TO WIN!&quot;</span> button to spin the prize wheel. 
                 You get one spin per calendar, so make it count!
               </p>
             </div>
@@ -48,7 +48,7 @@ export default function SpinInstructionsModal() {
               <h3 className="font-bold text-lg mb-2">Win Amazing Prizes</h3>
               <p className="text-gray-600">
                 Each segment represents a different prize. The smaller the segment, 
-                the rarer the prize! Look out for the tiny slices - they're the most valuable!
+                the rarer the prize! Look out for the tiny slices - they&apos;re the most valuable!
               </p>
             </div>
 
@@ -76,7 +76,7 @@ export default function SpinInstructionsModal() {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onPress={handleClose} size="lg" className="w-full">
-            Got it, let's spin!
+            Got it, let&apos;s spin!
           </Button>
         </ModalFooter>
       </ModalContent>
