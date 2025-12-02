@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
+type PrizeRow = {
+  id: number;
+  name: string;
+  weight: number | string;
+};
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
@@ -35,11 +41,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get all prizes with weights
-    const prizesResult = await query<{
-      id: number;
-      name: string;
-      weight: number;
-    }>(
+    const prizesResult = await query<PrizeRow>(
       "SELECT id, name, weight FROM prizes WHERE calendar_id = $1",
       [calendarId]
     );
@@ -48,9 +50,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No prizes available" }, { status: 400 });
     }
 
-    const prizes = prizesResult.rows.map(p => ({
+    const prizes = prizesResult.rows.map((p: PrizeRow) => ({
       ...p,
-      weight: parseFloat(p.weight as any) // Ensure weight is a number, not string
+      weight: typeof p.weight === "number" ? p.weight : parseFloat(p.weight), // Ensure weight is a number, not string
     }));
 
     // Weighted random selection

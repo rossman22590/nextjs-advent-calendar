@@ -33,9 +33,9 @@ export default function PrizeWheel({
   const router = useRouter();
 
   // DEBUG: Log prizes received from server
-  if (typeof window !== 'undefined') {
-    console.log('🎨 Prizes received in PrizeWheel component:', prizes);
-  }
+  // if (typeof window !== 'undefined') {
+  //   console.log('🎨 Prizes received in PrizeWheel component:', prizes);
+  // }
 
   const segmentAngle = 360 / prizes.length;
 
