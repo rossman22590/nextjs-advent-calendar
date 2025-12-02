@@ -10,6 +10,7 @@
     "migrate": "node scripts/run-migrations.js"
   },
   "dependencies": {
+    "@auth/pg-adapter": "^1.11.1",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.6",
@@ -37,6 +38,7 @@
     "intl-messageformat": "^10.5.0",
     "lucide-react": "^0.555.0",
     "next": "^15.0.3",
+    "next-auth": "^4.24.13",
     "next-themes": "^0.2.1",
     "pg": "^8.11.3",
     "postprocessing": "^6.38.0",

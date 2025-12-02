@@ -11,6 +11,7 @@ const AuthBar = dynamic(
 ) as any;
 
 import BackgroundEffects from "@/components/BackgroundEffects";
+import SessionProvider from "@/components/SessionProvider";
 
 import { faSnowflake } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -68,6 +69,7 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+        <SessionProvider>
         <div className="relative flex flex-col h-screen">
           {/* 3D GridScan Background */}
           <div className="absolute inset-0 z-0">
@@ -107,6 +109,7 @@ export default function RootLayout({
             </footer>
           </div>
         </div>
+        </SessionProvider>
       </body>
     </html>
   );
