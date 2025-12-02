@@ -47,8 +47,8 @@ export default function SpinInstructionsModal() {
             <div>
               <h3 className="font-bold text-lg mb-2">Win Amazing Prizes</h3>
               <p className="text-gray-600">
-                Each segment represents a different prize. The smaller the segment, 
-                the rarer the prize! Look out for the tiny slices - they&apos;re the most valuable!
+                Each segment represents a different prize. While they may look the same size, 
+                some are much harder to land on! The rarer prizes have lower probabilities - good luck!
               </p>
             </div>
 
@@ -75,7 +75,7 @@ export default function SpinInstructionsModal() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onPress={handleClose} size="lg" className="w-full">
+          <Button color="primary" onPress={handleClose} size="lg" className="w-full text-white">
             Got it, let&apos;s spin!
           </Button>
         </ModalFooter>
